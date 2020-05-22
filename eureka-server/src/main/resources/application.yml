@@ -1,17 +1,18 @@
 server:
-  port: 6060
+  port: @eureka-server.port@
 spring:
   application:
-    name: '@pom.artifactId@'
+    name: @pom.artifactId@
 eureka:
   instance:
-    hostname: localhost
+    hostname: @eureka-server.host@
     prefer-ip-address: true
   server:
       # 关闭自我保护
 #      enable-self-preservation: false
       # 清理服务器
-      eviction-interval-timer-in-ms: 5000    
+      eviction-interval-timer-in-ms: 5000
+
   client:
     healthcheck:
       enabled: true

@@ -1,0 +1,24 @@
+server:
+  port: @gateway.port@
+spring:
+  application:
+    name: @pom.artifactId@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://@eureka-server.host@:@eureka-server.port@/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    appname: ${spring.application.name}
+logging:
+  config: classpath:application-log4j2.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - routes
+          - filters
+          - info

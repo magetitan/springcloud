@@ -1,0 +1,16 @@
+[Unit]
+Description=data-into
+After=network.target remote-fs.target nss-lookup.target
+ 
+ 
+[Service]
+Type=forking
+WorkingDirectory=/home/opt/service
+ExecStart=/bin/bash /home/opt/service/start.sh
+ExecReload=/bin/bahs /home/opt/service/deploy.sh
+ExecStop=/bin/bash /home/opt/service/stop.sh
+PrivateTmp=true
+ 
+ 
+[Install]
+WantedBy=multi-user.target
