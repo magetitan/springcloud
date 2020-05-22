@@ -1,0 +1,26 @@
+server:
+  port: 6060
+spring:
+  application:
+    name: '@pom.artifactId@'
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  server:
+      # 关闭自我保护
+#      enable-self-preservation: false
+      # 清理服务器
+      eviction-interval-timer-in-ms: 5000    
+  client:
+    healthcheck:
+      enabled: true
+    # 服务提供者 不向eureka 注册
+    register-with-eureka: false
+    # 不从eureka 拉取服务列表
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+logging:
+  config: classpath:application-log4j2.yml
