@@ -16,7 +16,13 @@
     <packaging>pom</packaging>
     <description>Demo project for Spring Boot</description>
     <modules>
+        <module>pojo</module>
+        <module>common</module>
+        <module>dao</module>
+        <module>service</module>
+        <module>api</module>
         <module>eureka-server</module>
+        <module>zuul</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
@@ -25,6 +31,7 @@
         <eureka-server.host>localhost</eureka-server.host>
         <eureka-server.port>6060</eureka-server.port>
         <gateway.port>6061</gateway.port>
+        <zuul.port>6062</zuul.port>
     </properties>
     <repositories>
         <repository>
@@ -33,11 +40,11 @@
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
+                <updatePolicy>always</updatePolicy>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
+                <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
     </repositories>
@@ -99,6 +106,66 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!--阿里巴巴的一个druid的数据源，以前使用的是dbcp2 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.1.21</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-typehandlers-jsr310</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>3.8.7</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <!-- swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.swagger/swagger-models -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>1.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>1.9.13</version>
+            </dependency>
+            <!-- 调度  -->
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>2.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz-jobs</artifactId>
+                <version>2.3.2</version>
             </dependency>
 <!--            <dependency>-->
 <!--                <groupId>org.springframework.boot</groupId>-->
@@ -173,6 +240,9 @@
                         <target>${java.version}</target>
                         <source>${java.version}</source>
                         <encoding>UTF-8</encoding>
+<!--                        <compilerArguments>-->
+<!--                            <bootclasspath>${JAVA_HOME}/jre/lib/rt.jar</bootclasspath>-->
+<!--                        </compilerArguments>-->
                     </configuration>
                 </plugin>
             </plugins>

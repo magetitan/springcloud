@@ -1,0 +1,35 @@
+server:
+  port: @gateway.port@
+spring:
+  application:
+    name: @pom.artifactId@
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://@eureka-server.host@:@eureka-server.port@/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    appname: ${spring.application.name}
+    # 心跳检测检测与续约时间
+    # 测试时将值设置设置小些，保证服务关闭后注册中心能及时踢出服务
+    #　　lease-renewal-interval-in-seconds 每间隔10s，向服务端发送一次心跳，证明自己依然”存活“
+    #　　lease-expiration-duration-in-seconds  告诉服务端，如果我20s之内没有给你发心跳，就代表我“死”了，将我踢出掉。
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+logging:
+  config: classpath:application-log4j2.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - routes
+          - filters
+          - info
+ribbon:
+  ReadTimeout: 60000
+  SocketTimeout: 100000

@@ -8,11 +8,10 @@ eureka:
     hostname: @eureka-server.host@
     prefer-ip-address: true
   server:
-      # 关闭自我保护
-#      enable-self-preservation: false
+      # 关闭自我保护，以确保注册中心将不可用的实例正确剔除
+      enable-self-preservation: false
       # 清理服务器
       eviction-interval-timer-in-ms: 5000
-
   client:
     healthcheck:
       enabled: true
@@ -22,6 +21,22 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - autoconfig
+          - auditevents
+          - beans
+          - configprops
+          - dump
+          - env
+          - health
+          - info
+          - metrics
+          - mappings
+          - shutdown
+          - trace
 logging:
   config: classpath:application-log4j2.yml
